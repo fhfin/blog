@@ -11,6 +11,7 @@
 ```bash
 pnpm init    #或者npm init yarn init等
 ```
+
 2. 安装需要的依赖
 
 ```bash
@@ -18,12 +19,14 @@ pnpm install --dev vitepress vue
 ```
 
 3. 写入第一个文档
+
 ```bash
 mkdir docs && echo '# Hello VitePress' > docs/index.md
 # 或者在根目录新建docs文件夹，文件夹新建index.md，文件内写入 # Hello Vitepress
 ```
 
 4. 在package.json里写入执行脚本
+
 ```json
 {
     ...
@@ -37,15 +40,16 @@ mkdir docs && echo '# Hello VitePress' > docs/index.md
 ```
 
 5. 启动项目
+
 ```bash
 pnpm docs:dev
 # 或者 npm run docs:dev
 ```
 
-
 ## 2.配置vitepress
 
 1. 文件结构
+
 ```arduino
 .
 ├─ .github // 部署相关，后面会说
@@ -63,6 +67,7 @@ pnpm docs:dev
 ```
 
 2. config.js配置
+
 ```js
 export default {
     title: 'xxx', // 博客的标题
@@ -77,7 +82,6 @@ export default {
     },
 }
 ```
-
 
 ## 3.上传到github自动部署
 

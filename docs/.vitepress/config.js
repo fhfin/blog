@@ -5,20 +5,55 @@ export default {
   lastUpdated: true,
   themeConfig: {
       nav: [ // 页面右上角的导航
-          { text: "文章", link: "/articles/",activeMatch:'/articles/' },
-          { text: "开始", link: "/start" },
+          { text: "文章", link: "/articles/js/jsbase",activeMatch:'/articles/' },
       ],
       sidebar: { // 侧边栏，可以分组
           "/articles/": [
-              {test:'index',link:'/articles/'},
-              { text: "vitepress搭建",link:'/articles/start-vitepress' },
-              { text: "markDown语法",link:'/articles/markdown-syntax' },
+              { 
+                text: "js相关",link:'/articles/js/jsbase',items:[
+                  {text:'js基础',link:'/articles/js/jsbase'},
+                  {text:'浏览器',link:'/articles/js/navigate'},
+                  {text:'异步相关',link:'/articles/js/asynchronism'},
+                  {text:'this相关',link:'/articles/js/this'},
+                  {text:'文件引入方式',link:'/articles/js/fileImport'},
+                  {text:'es6',link:'/articles/js/es6'},
+                  {text:'application',link:'/articles/js/application'},
+                  {text:'模块化',link:'/articles/js/modules'},
+                  {text:'浏览器',link:'/articles/js/navigate'},
+                  {text:'性能',link:'/articles/js/performance'},
+                  {text:'设计模式',link:'/articles/js/designPatterns'},
+                  {text:'算法',link:'/articles/js/arithmetic'},
+                ] 
+              },
+              {
+                text:'CSS',link:'/articles/css/index',items:[
+                  {text:'布局',link:'/articles/css/layout'}
+                ]
+              },
+              {
+                text:'网络传输',link:'/articles/network/index',items:[
+                  {text:'网络传输',link:'/articles/network/index'}
+                ]
+              },
+              {
+                text:'框架',link:'/articles/frame/vue',items:[
+                  {text:'Vue',link:'/articles/frame/vue'}
+                ]
+              },
+              {
+                text:'其他',link:'/articles/other/start-vitepress',items:[
+                  { text: "vitepress搭建",link:'/articles/other/start-vitepress' },
+                  { text: "markDown语法",link:'/articles/other/markdown-syntax' }
+                ]
+              },
+          ],
+          "/problem/":[
+            {
+              text:'',link:'',items:[
+                {text:'',link:''}
+              ]
+            }
           ]
-      },
-    //   footer: {
-    //     message: 'Released under the MIT License.',
-    //     copyright: 'Copyright © 2019-present Evan You'
-    //   },
-      socialLinks: [{ icon: "github", link: "https://github.com/fhfin" }], // 可以连接到 github
+      }
   },
 }   
