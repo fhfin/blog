@@ -70,7 +70,7 @@ Promise.resolve(1)
 })
 .catch(err => 3)
 .then(res => console.log(res))
-复制代码
+
 // 例2
 Promise.resolve(1)
 .then(x => x + 1)
@@ -81,7 +81,7 @@ Promise.resolve(1)
 .then(x => x + 1)
 .then(x => console.log(x)) //2
 .catch(console.error)
-复制代码
+
 // 例3
 let fs = require('fs')
 function read(url) {
@@ -106,4 +106,74 @@ read('./name.txt')
 .catch(function(err) {
   console.log('error')
 })
+```
+
+## async await
+
+背景
+
+- 异步回调callback hell
+- promise then catch链式调用，但也是基于回调函数
+- async/await是同步语法，彻底消灭回调函数
+
+async/await与promise的关系
+
+- async/await 是消灭回调的终极武器
+- 但是是promise并不互斥
+- 两者相辅相成
+- 执行async函数，返回的是promise对象
+- await相当于promise的then
+- try...catch可捕获异常，代替了promise的catch
+
+async/await是语法糖，本质上还是回调函数
+
+```javascript
+async function async1 () {
+  console.log('async1 start') // 2
+  await async2()
+  console.log('async1 end') // 5 关键在这一步，它相当于放在 callback 中，最后执行
+}
+
+async function async2 () {
+  console.log('async2') // 3
+}
+
+console.log('script start') // 1
+async1()
+console.log('script end') // 4
+// 即，只要遇到了 `await` ，后面的代码都相当于放在 callback 里。
+```
+
+## 异步题
+
+```javascript
+// 例一
+async function async1() {
+  console.log("async1 start") // 2
+  await async2()
+  // await后面的都作为回调内容 - 微任务
+  console.log("async1 end") // 6
+}
+
+async function async2() {
+  console.log("async2") // 3
+}
+
+console.log("script start") // 1
+
+setTimeout(function () { // 宏任务 setTimeout
+  console.log("setTimeout") // 8
+}, 0)
+
+async1()
+
+// 初始化promise时，传入的函数会立即被执行
+new Promise(function (resolve) {
+  console.log("promise1") // 4
+  resolve()
+}).then(function () { // 微任务
+  console.log("promise2") // 7
+})
+
+console.log("script end") // 5
 ```

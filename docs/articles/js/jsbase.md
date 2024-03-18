@@ -1,97 +1,27 @@
 # js基础
 
-## instanceof原理，手动实现
+## JS代码中的use strict
 
-```javascript
-let person = function () {
-}
-let no = new person()
-no instanceof person //true
-```
+use strict是一种ECMAscript5添加的（严格）运行模式，这种模式使得Javascript 在更严格的条件下运行。
+设立"严格模式"的目的，主要有以下几个:
 
-原理：
+消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;消除代码运行的一些不安全之处，保证代码运行的安全;
+提高编译器效率，增加运行速度;
+为未来新版本的Javascript 做好铺垫。
+区别:
 
-```javascript
-function new_instace_of（leftValue，rightValue）{
-    let rightProto = rightValue.prototype  //取右表达式的prototype值
-    leftValue = leftValue.__proto__   //取左表达式的__proto__值
-    while(true){
-        if(leftValue === null){
-            return false
-        }
-        if(leftValue === rightProto){
-            return true
-        }
-        leftValue = leftValue.__proto__
-    }
-}
-```
+- 禁止使用with语句。
+- 禁止this关键字指向全局对象。
+- 对象不能有重名的属性。
 
-其实 instanceof 主要的实现原理就是只要右边变量的 prototype 在左边变量的原型链上即可。因此，instanceof 在查找的过程中会遍历左边变量的原型链，直到找到右边变量的 prototype，如果查找失败，则会返回 false，告诉我们左边变量并非是右边变量的实例。
+## Object.is()与原来的比较操作符“==”、“===”的区别？
 
-## 数组去重
+- 两等号判等，会在比较时进行类型转换;
+- 三等号判等(判断严格)，比较时不进行隐式类型转换，(类型不同则会返回false) ;
+- Object.is()在三等号判等的基础上特别处理了NaN、-0和+0，保证-0和+0不再相同，但Object.is(NaN,NaN)会返回true。
+- Object.is()应被认为有其特殊的用途，而不能用它认为它比其它的相等对比更宽松或严格。
 
-### ES6 Set去重
-
-```javascript
-function uniqe(arr){
-    return Array.from(new Set(arr))
-}
-
-var arr = [1,1,'true','true',true,true,15,15,false,false, undefined,undefined, null,null, NaN, NaN,'NaN', 0, 0, 'a', 'a',{},{}];
-console.log(unique(arr))
- //[1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", {}, {}]
-```
-
-这种方法无法去掉{}空对象
-
-### 利用for嵌套for，然后splice去重
-
-```javascript
-function unique(arr){            
-        for(let i=0; i<arr.length; i++){
-            for(let j=i+1; j<arr.length; j++){
-                if(arr[i]==arr[j]){         //第一个等同于第二个，splice方法删除第二个
-                    arr.splice(j,1);
-                    j--;
-                }
-            }
-        }
-return arr;
-}
-var arr = [1,1,'true','true',true,true,15,15,false,false, undefined,undefined, null,null, NaN, NaN,'NaN', 0, 0, 'a', 'a',{},{}];
-    console.log(unique(arr))
-    //[1, "true", 15, false, undefined, NaN, NaN, "NaN", "a", {}, {}]   
-    //NaN和{}没有去重，两个null直接消失了
-```
-
-双层循环，外层循环元素，内层循环时比较值。值相同时，则删去这个值。
-
-### 利用indexOf去重
-
-```javascript
-function unique(arr) {
-    if (!Array.isArray(arr)) {
-        console.log('type error!')
-        return
-    }
-    var array = [];
-    for (var i = 0; i < arr.length; i++) {
-        if (array .indexOf(arr[i]) === -1) {  
-            //或者includes，判断array.includes(arr[i]),返回true或false
-            array .push(arr[i])
-        }
-    }
-    return array;
-}
-var arr = [1,1,'true','true',true,true,15,15,false,false, undefined,undefined, null,null, NaN, NaN,'NaN', 0, 0, 'a', 'a',{},{}];
-console.log(unique(arr))
-   // [1, "true", true, 15, false, undefined, null, NaN, NaN, "NaN", 0, "a", {…}, {…}]      //NaN、{}没有去重
-```
-
-新建一个空的结果数组，for 循环原数组，判断结果数组是否存在当前元素，如果有相同的值则跳过，不相同则push进数组。
-
-### 数组和伪数组
+## 数组和伪数组
 
 数组是一个特殊对象，与常规对象的区别：
 
@@ -136,6 +66,35 @@ class Oberver{
     }
 }
 ```
+
+## instanceof原理，手动实现
+
+```javascript
+let person = function () {
+}
+let no = new person()
+no instanceof person //true
+```
+
+原理：
+
+```javascript
+function new_instace_of（leftValue，rightValue）{
+    let rightProto = rightValue.prototype  //取右表达式的prototype值
+    leftValue = leftValue.__proto__   //取左表达式的__proto__值
+    while(true){
+        if(leftValue === null){
+            return false
+        }
+        if(leftValue === rightProto){
+            return true
+        }
+        leftValue = leftValue.__proto__
+    }
+}
+```
+
+其实 instanceof 主要的实现原理就是只要右边变量的 prototype 在左边变量的原型链上即可。因此，instanceof 在查找的过程中会遍历左边变量的原型链，直到找到右边变量的 prototype，如果查找失败，则会返回 false，告诉我们左边变量并非是右边变量的实例。
 
 ## Set、Map、WeakSet和WeakMap的区别
 

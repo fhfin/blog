@@ -1,5 +1,67 @@
 # 应用
 
+## 数组去重
+
+### ES6 Set去重
+
+```javascript
+function uniqe(arr){
+    return Array.from(new Set(arr))
+}
+
+var arr = [1,1,'true','true',true,true,15,15,false,false, undefined,undefined, null,null, NaN, NaN,'NaN', 0, 0, 'a', 'a',{},{}];
+console.log(unique(arr))
+ //[1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", {}, {}]
+```
+
+这种方法无法去掉{}空对象
+
+### 利用for嵌套for，然后splice去重
+
+```javascript
+function unique(arr){            
+        for(let i=0; i<arr.length; i++){
+            for(let j=i+1; j<arr.length; j++){
+                if(arr[i]==arr[j]){         //第一个等同于第二个，splice方法删除第二个
+                    arr.splice(j,1);
+                    j--;
+                }
+            }
+        }
+return arr;
+}
+var arr = [1,1,'true','true',true,true,15,15,false,false, undefined,undefined, null,null, NaN, NaN,'NaN', 0, 0, 'a', 'a',{},{}];
+    console.log(unique(arr))
+    //[1, "true", 15, false, undefined, NaN, NaN, "NaN", "a", {}, {}]   
+    //NaN和{}没有去重，两个null直接消失了
+```
+
+双层循环，外层循环元素，内层循环时比较值。值相同时，则删去这个值。
+
+### 利用indexOf去重
+
+```javascript
+function unique(arr) {
+    if (!Array.isArray(arr)) {
+        console.log('type error!')
+        return
+    }
+    var array = [];
+    for (var i = 0; i < arr.length; i++) {
+        if (array .indexOf(arr[i]) === -1) {  
+            //或者includes，判断array.includes(arr[i]),返回true或false
+            array .push(arr[i])
+        }
+    }
+    return array;
+}
+var arr = [1,1,'true','true',true,true,15,15,false,false, undefined,undefined, null,null, NaN, NaN,'NaN', 0, 0, 'a', 'a',{},{}];
+console.log(unique(arr))
+   // [1, "true", true, 15, false, undefined, null, NaN, NaN, "NaN", 0, "a", {…}, {…}]      //NaN、{}没有去重
+```
+
+新建一个空的结果数组，for 循环原数组，判断结果数组是否存在当前元素，如果有相同的值则跳过，不相同则push进数组。
+
 ## 防抖和节流的原理和使用场景
 
 函数防抖和函数节流：优化高频率执行js代码的一种手段，js中的一些事件如浏览器的resize、scroll，鼠标的mousemove、mouseover，input输入框的keypress等事件在触发时，会不断地调用绑定在事件上的回调函数，极大地浪费资源，降低前端性能。为了优化体验，需要对这类事件进行调用次数的限制。

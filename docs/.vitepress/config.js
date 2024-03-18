@@ -11,7 +11,6 @@ export default {
           "/articles/": [
               { 
                 text: "js相关",link:'/articles/js/jsbase',items:[
-                  {text:'js基础',link:'/articles/js/jsbase'},
                   {text:'浏览器',link:'/articles/js/navigate'},
                   {text:'异步相关',link:'/articles/js/asynchronism'},
                   {text:'this相关',link:'/articles/js/this'},
@@ -43,7 +42,8 @@ export default {
               {
                 text:'其他',link:'/articles/other/start-vitepress',items:[
                   { text: "vitepress搭建",link:'/articles/other/start-vitepress' },
-                  { text: "markDown语法",link:'/articles/other/markdown-syntax' }
+                  { text: "markDown语法",link:'/articles/other/markdown-syntax' },
+                  { text: "面试题",link:'/articles/other/question' }
                 ]
               },
           ],
